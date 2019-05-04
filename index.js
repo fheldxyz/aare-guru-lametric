@@ -1,4 +1,4 @@
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3000
 var express = require("express");
 var app = express();
 var server = app.listen(PORT);
@@ -11,10 +11,10 @@ var temp_past;
 var chartData = [];
 var min, max;
 
-request('https://aareguru.existenz.ch/v2018/current',request_callback);
+request('https://aareguru.existenz.ch/v2018/current?app=xyz.fheld.lametric.aaretemperatur&version=1.0',request_callback);
 
 app.get('/', function (req, res) {
-  request('https://aareguru.existenz.ch/v2018/current',request_callback);
+  request('https://aareguru.existenz.ch/v2018/current?app=xyz.fheld.lametric.aaretemperatur&version=1.0',request_callback);
   res.json({"frames":[{"text":aaretempstring,"icon":null},{"text":text,"icon":2355},{"index":1,"chartData":chartData}]});
 });
 
@@ -40,3 +40,5 @@ function request_callback (error, response, body){
   }
 
 }
+
+// https://aareguru.existenz.ch/v2018/current?app=xyz.fheld.lametric.aaretemperatur&version=1.0
