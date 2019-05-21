@@ -27,14 +27,17 @@ app.get('/', function (req, res) {
 
 function request_callback (error, response, body){
   var aaredata = JSON.parse(body);
- // console.log(typeof aaredata.aare);
+
   aaretempstring = aaredata.aare.temperature.toString();
   ort  = aaredata.aare.location;
   text = aaredata.aare.temperature_text;
   aaretempstring = ort + " " +  aaretempstring + "°";
 
   temp_past = aaredata.aarepast;
-  console.log("DONE");
+  
+  size_of_temp_past = temp_past.length;
+  
+  end = Math.min(7*37, size_of_temp_past);
 
   /*
   for (i = 0; i < 37; i++) {
