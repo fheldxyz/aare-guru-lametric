@@ -10,6 +10,7 @@ var text;
 var temp_past;
 var chartData = [];
 var min, max;
+var end, size_of_temp_past;
 
 request('https://aareguru.existenz.ch/v2018/current?app=xyz.fheld.lametric.aaretemperatur&version=1.0',request_callback);
 
@@ -18,8 +19,8 @@ app.get('/', function (req, res) {
   res.json({"frames":[
     
     {"text":aaretempstring,"icon":null},
-    {"text":text,"icon":2355} /*,
-    {"index":1,"chartData":chartData}  */
+    {"text":text,"icon":2355},
+    {"index":1,"chartData":chartData}  
  
   ]});
 });
@@ -39,8 +40,8 @@ function request_callback (error, response, body){
   
   end = Math.min(7*37, size_of_temp_past);
 
-  /*
-  for (i = 0; i < 37; i++) {
+  
+  for (i = 0; i < end; i++) {
     chartData[i]=Math.round(100*temp_past[7*i].temperature);
   }
   min = Math.min(...chartData); max = Math.max(...chartData);
@@ -48,7 +49,7 @@ function request_callback (error, response, body){
   for (i = 0; i < 37; i++) {
     chartData[i]=(chartData[i]-min)*8/(max-min);
   }
-  */
+  
 
 }
 
