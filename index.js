@@ -15,7 +15,13 @@ request('https://aareguru.existenz.ch/v2018/current?app=xyz.fheld.lametric.aaret
 
 app.get('/', function (req, res) {
   request('https://aareguru.existenz.ch/v2018/current?app=xyz.fheld.lametric.aaretemperatur&version=1.0',request_callback);
-  res.json({"frames":[{"text":aaretempstring,"icon":null},{"text":text,"icon":2355},{"index":1,"chartData":chartData}]});
+  res.json({"frames":[
+    
+    {"text":aaretempstring,"icon":null},
+    {"text":text,"icon":2355} /*,
+    {"index":1,"chartData":chartData}  */
+ 
+  ]});
 });
 
 
@@ -29,7 +35,8 @@ function request_callback (error, response, body){
 
   temp_past = aaredata.aarepast;
   console.log("DONE");
- // console.log(Math.round(3.1));
+
+  /*
   for (i = 0; i < 37; i++) {
     chartData[i]=Math.round(100*temp_past[7*i].temperature);
   }
@@ -38,6 +45,7 @@ function request_callback (error, response, body){
   for (i = 0; i < 37; i++) {
     chartData[i]=(chartData[i]-min)*8/(max-min);
   }
+  */
 
 }
 
