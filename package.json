@@ -1,7 +1,7 @@
 {
   "name": "lametric-aare-guuru",
   "engines": {
-    "node": "10.15.3",
+    "node": "12.2.0",
     "npm": "5.8.0"
   },
   "version": "1.0.0",
