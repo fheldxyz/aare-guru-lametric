@@ -36,14 +36,14 @@ function processData(body,withgraph) {
   
   
   var result;
-  if (withgraph==true){
+  if (withgraph=="true"){
 	  result = {"frames":[
 		{"text":aaretemperaturestring,"icon":null},
 		{"text":temperature_text,"icon":2355},
 		{"index":1,"chartData":chartData} 
 	  ]};
   }
-  else if (withgraph==false){
+  else if (withgraph=="false"){
 	  result = {"frames":[
 		{"text":aaretemperaturestring,"icon":null},
 		{"text":temperature_text,"icon":2355}
@@ -63,7 +63,7 @@ app.get("/", (req, res) => {
       + req.query.city 
       + "&" 
       + "app=xyz.fheld.lametric.aaretemperatur&version=1.1")
-    .then((response)=>processData(response,req.query.graph || 0 ))
+    .then((response)=>processData(response,req.query.graph || "false" ))
     .then(response => {
         res.send(response)
     })
