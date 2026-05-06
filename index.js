@@ -58,11 +58,13 @@ function processData(body,withgraph) {
 
 app.get("/", (req, res) => {
 
-    rp(
-      "https://aareguru.existenz.ch/v2018/current?city="
-      + req.query.city 
-      + "&" 
-      + "app=xyz.fheld.lametric.aaretemperatur&version=1.1")
+    rp({
+      uri: "https://aareguru.existenz.ch/v2018/current?city="
+      + req.query.city
+      + "&"
+      + "app=xyz.fheld.lametric.aaretemperatur&version=1.1",
+      timeout: 3000
+    })
     .then((response)=>processData(response,req.query.graph || "false" ))
     .then(response => {
         res.send(response)
