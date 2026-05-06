@@ -49,7 +49,7 @@ function processData(body,withgraph) {
 		{"text":temperature_text,"icon":2355}
 	  ]};
   }
-   
+  
   return result;
 
 }
@@ -72,4 +72,8 @@ app.get("/", (req, res) => {
     })
 })
 
-app.listen(port);
+if (require.main === module) {
+    app.listen(port);
+}
+
+module.exports = { processData };
