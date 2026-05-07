@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://fheldxyz.github.io/aare-guru-lametric/schemas/lametric-response.schema.json",
+  "title": "LaMetric Frames Response",
+  "description": "JSON response shape accepted by LaMetric My Data DIY and Indicator-style frame endpoints.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["frames"],
+  "properties": {
+    "frames": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 20,
+      "items": {
+        "$ref": "#/definitions/frame"
+      }
+    }
+  },
+  "definitions": {
+    "frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": ["text"]
+        },
+        {
+          "required": ["goalData"]
+        },
+        {
+          "required": ["chartData"]
+        }
+      ],
+      "properties": {
+        "icon": {
+          "description": "LaMetric icon ID, icon code, base64 data URI, or null when no icon is used.",
+          "type": ["integer", "string", "null"]
+        },
+        "text": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "index": {
+          "description": "Frame index appears in official examples for chart frames.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "goalData": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["start", "current", "end"],
+          "properties": {
+            "start": {
+              "type": "integer"
+            },
+            "current": {
+              "type": "integer"
+            },
+            "end": {
+              "type": "integer"
+            },
+            "unit": {
+              "type": "string"
+            }
+          }
+        },
+        "chartData": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}
