@@ -4,12 +4,12 @@ This service is designed to run as a stateless Render Web Service on the Free in
 
 ## Runtime
 
-Render's current default Node.js version for newly created Node services is Node 22. The project
+Render's current default Node.js version for newly created Node services is Node 24. The project
 also declares this explicitly in `package.json`:
 
 ```json
 "engines": {
-  "node": ">=22 <23",
+  "node": ">=24 <25",
   "npm": ">=10 <12"
 }
 ```
