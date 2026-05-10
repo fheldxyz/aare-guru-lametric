@@ -37,7 +37,7 @@ function getJson(url) {
             statusCode: res.statusCode,
             body: JSON.parse(body),
           });
-        } catch (error) {
+        } catch {
           reject(new Error(`Expected JSON from ${url}, got: ${body}`));
         }
       });

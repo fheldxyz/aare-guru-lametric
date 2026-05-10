@@ -34,7 +34,7 @@
       "properties": {
         "icon": {
           "description": "LaMetric icon ID, icon code, base64 data URI, or null when no icon is used.",
-          "type": ["integer", "string", "null"]
+          "anyOf": [{ "type": "integer" }, { "type": "string" }, { "type": "null" }]
         },
         "text": {
           "type": "string"
