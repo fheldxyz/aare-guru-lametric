@@ -36,19 +36,24 @@ function processData(body,withgraph) {
   
   
   var result;
-  if (withgraph=="true"){
+  if (withgraph=="true" ||
+      withgraph=="1"
+  ){
 	  result = {"frames":[
 		{"text":aaretemperaturestring,"icon":null},
 		{"text":temperature_text,"icon":2355},
 		{"index":1,"chartData":chartData} 
 	  ]};
   }
-  else if (withgraph=="false"){
+  else if (withgraph=="false" ||
+           withgraph=="0"
+  ){
 	  result = {"frames":[
 		{"text":aaretemperaturestring,"icon":null},
 		{"text":temperature_text,"icon":2355}
 	  ]};
   }
+
    
   return result;
 
