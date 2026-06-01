@@ -1,7 +1,6 @@
 "use strict";
 
 const express = require("express");
-const rp = require('request-promise-native');
 const app = express();
 const port = process.env.PORT || 3000; //heroku and others use 'process.env.PORT'
 
@@ -36,19 +35,24 @@ function processData(body,withgraph) {
   
   
   var result;
-  if (withgraph=="true"){
+  if (withgraph=="true" ||
+      withgraph=="1"
+  ){
 	  result = {"frames":[
 		{"text":aaretemperaturestring,"icon":null},
 		{"text":temperature_text,"icon":2355},
 		{"index":1,"chartData":chartData} 
 	  ]};
   }
-  else if (withgraph=="false"){
+  else if (withgraph=="false" ||
+           withgraph=="0"
+  ){
 	  result = {"frames":[
 		{"text":aaretemperaturestring,"icon":null},
 		{"text":temperature_text,"icon":2355}
 	  ]};
   }
+
    
   return result;
 
@@ -58,11 +62,12 @@ function processData(body,withgraph) {
 
 app.get("/", (req, res) => {
 
-    rp(
+    fetch(
       "https://aareguru.existenz.ch/v2018/current?city="
       + req.query.city 
       + "&" 
-      + "app=xyz.fheld.lametric.aaretemperatur&version=1.1")
+      + "app=xyz.fheld.lametric.aaretemperatur&version=1.1.1")
+    .then(r=>r.text())
     .then((response)=>processData(response,req.query.graph || "false" ))
     .then(response => {
         res.send(response)
