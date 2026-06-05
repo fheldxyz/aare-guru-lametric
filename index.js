@@ -79,10 +79,14 @@ app.get("/", (req, res) => {
     })
 })
 
-app.listen(port);
+const server = app.listen(port);
 
 console.log("Server started at:", Date())
-process.on("SIGTERM", ()=>console.log(
-  "Counted", request_count, "requests.",
-  "It's:", Date(), "- bye!"
-));
+process.on("SIGTERM", () => {
+  server.close();
+  console.log(
+    "Counted", request_count, "requests.",
+    "It's:", Date(), "- bye!");
+  process.exit(0);
+  } 
+);
