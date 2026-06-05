@@ -1,6 +1,7 @@
 "use strict";
 
-const express = require("express");
+import express from "express";
+
 const app = express();
 const port = process.env.PORT || 3000; //heroku and others use 'process.env.PORT'
 
