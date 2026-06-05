@@ -5,6 +5,7 @@ import express from "express";
 const app = express();
 const port = process.env.PORT || 3000; //heroku and others use 'process.env.PORT'
 
+var request_count = 0;
 
 function processData(body,withgraph) {
   
@@ -62,7 +63,7 @@ function processData(body,withgraph) {
 
 
 app.get("/", (req, res) => {
-
+    request_count++;
     fetch(
       "https://aareguru.existenz.ch/v2018/current?city="
       + req.query.city 
@@ -81,4 +82,7 @@ app.get("/", (req, res) => {
 app.listen(port);
 
 console.log("Server started at:", Date())
-process.on("SIGTERM", ()=>console.log("it's:", Date(), "- bye!"));
+process.on("SIGTERM", ()=>console.log(
+  "Counted", request_count, "requests.",
+  "It's:", Date(), "- bye!"
+));
