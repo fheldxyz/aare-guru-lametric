@@ -79,3 +79,6 @@ app.get("/", (req, res) => {
 })
 
 app.listen(port);
+
+console.log("Server started at:", Date())
+process.on("SIGTERM", ()=>console.log("it's:", Date(), "- bye!"));
