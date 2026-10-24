@@ -76,6 +76,7 @@ app.get("/", (req, res) => {
         res.send(response)
     })
     .catch(error => {
+        console.log(error);
         res.send(errorFrame)
     })
 })
