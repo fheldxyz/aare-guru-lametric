@@ -62,7 +62,6 @@ function processData(body,withgraph) {
 }
 
 
-
 app.get("/", (req, res) => {
     request_count++;
     fetch(
