@@ -75,7 +75,7 @@ app.get("/", (req, res) => {
         res.send(response)
     })
     .catch(error => {
-        console.log(error);
+        console.dir(error, { depth: null });
         res.send(errorFrame)
     })
 })
