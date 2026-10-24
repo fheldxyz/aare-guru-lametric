@@ -81,6 +81,15 @@ app.get("/", (req, res) => {
     })
 })
 
+app.get("/status", (req, res) => {
+  fetch("http://149.126.4.16/") // are we blocked by cyon?
+  .then(_ => res.send("OK"))
+  .catch(error => {
+      console.dir(error, { depth: null });
+      res.send("Error");
+  }
+)})
+
 const server = app.listen(port);
 
 console.log("Server started at:", Date())
