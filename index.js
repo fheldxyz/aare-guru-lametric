@@ -81,9 +81,12 @@ app.get("/", (req, res) => {
     })
 })
 
-app.get("/status", (req, res) => {
+app.get("/status", (_, res) => {
   fetch("http://149.126.4.16/") // are we blocked by cyon?
-  .then(_ => res.send("OK"))
+  .then(r => {
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    res.send("OK");
+  })
   .catch(error => {
       console.dir(error, { depth: null });
       res.send("Error");
