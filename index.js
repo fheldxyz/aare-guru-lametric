@@ -9,6 +9,7 @@ const timeoutFrame = {"frames":[{"text":"ke plan","icon":null}]};
 
 const wait_period = 1000 * 60 // 60sec
 var last_failed_request = 0;
+var failiure_level = 0;
 
 function processData(body,withgraph) {
   
@@ -66,10 +67,9 @@ function processData(body,withgraph) {
 
 
 app.get("/", (req, res) => {
-    if (Date.now() - last_failed_request < wait_period) {
+    if (Date.now() - last_failed_request < wait_period * failiure_level) {
       res.send(timeoutFrame)
     } else {
-      last_failed_request = 0;
       fetch(
         "https://aareguru.existenz.ch/v2018/current?city="
         + req.query.city 
@@ -79,9 +79,14 @@ app.get("/", (req, res) => {
       .then((response)=>processData(response,req.query.graph || "false" ))
       .then(response => {
           res.send(response)
+          last_failed_request = 0;
+          failiure_level = 0;
       })
+
       .catch(error => {
+          failiure_level++;
           last_failed_request = Date.now();
+          console.log("Failiure Level is: ", failiure_level);
           console.dir(error, { depth: null });
           res.send(errorFrame)
       })
