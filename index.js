@@ -4,7 +4,11 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000; //heroku and others use 'process.env.PORT'
 const errorFrame = {"frames":[{"text":"ke ahnig","icon":null}]};
+const timeoutFrame = {"frames":[{"text":"ke plan","icon":null}]};
 
+
+const wait_period = 1000 * 60 // 60sec
+var last_failed_request = 0;
 
 function processData(body,withgraph) {
   
@@ -62,20 +66,26 @@ function processData(body,withgraph) {
 
 
 app.get("/", (req, res) => {
-
-    fetch(
-      "https://aareguru.existenz.ch/v2018/current?city="
-      + req.query.city 
-      + "&" 
-      + "app=xyz.fheld.lametric.aaretemperatur&version=1.1.1")
-    .then(r=>r.text())
-    .then((response)=>processData(response,req.query.graph || "false" ))
-    .then(response => {
-        res.send(response)
-    })
-    .catch(error => {
-        res.send(errorFrame)
-    })
+    if (Date.now() - last_failed_request < wait_period) {
+      res.send(timeoutFrame)
+    } else {
+      last_failed_request = 0;
+      fetch(
+        "https://aareguru.existenz.ch/v2018/current?city="
+        + req.query.city 
+        + "&" 
+        + "app=xyz.fheld.lametric.aaretemperatur&version=1.1.1")
+      .then(r=>r.text())
+      .then((response)=>processData(response,req.query.graph || "false" ))
+      .then(response => {
+          res.send(response)
+      })
+      .catch(error => {
+          last_failed_request = Date.now();
+          console.dir(error, { depth: null });
+          res.send(errorFrame)
+      })
+    }
 })
 
 app.listen(port);
