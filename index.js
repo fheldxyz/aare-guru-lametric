@@ -3,6 +3,7 @@
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000; //heroku and others use 'process.env.PORT'
+const errorFrame = {"frames":[{"text":"ke ahnig","icon":null}]};
 
 
 function processData(body,withgraph) {
@@ -73,7 +74,7 @@ app.get("/", (req, res) => {
         res.send(response)
     })
     .catch(error => {
-        res.send("error was caught")
+        res.send(errorFrame)
     })
 })
 
